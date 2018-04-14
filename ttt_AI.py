@@ -123,8 +123,9 @@ class TTTClient:
 class AiPlayer(TTTClient):
     """TTTClientGame deals with the game logic on the client side."""
     board_content = []
-    play_as = ''
     command = ""
+    ## play_as = 'X' or 'O'
+    play_as = ''
 
     def __init__(self):
         """Initializes the client game object."""
