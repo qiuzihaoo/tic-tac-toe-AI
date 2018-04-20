@@ -129,6 +129,7 @@ class AiPlayer(TTTClient):
     ## play_as = 'X' or 'O'
     play_as = ''
     command = ""
+    agent_move = -1
     agent_last_move = -1
     opp_move = -1
     opp_last_move = -1
@@ -250,10 +251,10 @@ class AiPlayer(TTTClient):
         print("Your opponent took up number " + str(move));
 
         # Saves the oppenent's last move before overwriting
-        opp_last_move = move
+        self.opp_last_move = self.opp_move
 
         # Updates to the current move
-        opp_move = move - 1
+        self.opp_move = self.opp_move - 1
 
     def __draw_winning_path__(self, winning_path):
         """(Private) Shows to the user the path that has caused the game to
@@ -299,6 +300,7 @@ class AiPlayer(TTTClient):
             # Prompt the user to enter a position
             try:
                 position = int(input('Please enter the position (1~9):'))
+                print(self.opponent_pos())
             except:
                 print("Invalid input.")
                 continue
@@ -313,7 +315,10 @@ class AiPlayer(TTTClient):
                           "Please choose another one.")
                 else:
                     # Save the previous move
-                    self.agent_last_move = position - 1
+                    self.agent_last_move = self.agent_move
+
+                    # Update the current move
+                    self.agent_move = position - 1
 
                     # If the user input is valid, break the loop
                     if not self.shortMemory.save(board_before=self.board_content, move=position, role=self.role, is_new=True):
@@ -329,12 +334,12 @@ class AiPlayer(TTTClient):
 
     def opponent_pos(self):
         opponent = []
-        agentSymbol = self.play_as()
+        agentSymbol = self.agent_role()
         if agentSymbol == 'X':
             oppSymbol = 'O'
-        elif agentSymbol == 'O':
+        else:
             oppSymbol = 'X'
-        for i in self.board:
+        for i in self.board_content:
             if i == oppSymbol:
                 opponent.append(i)
 
@@ -342,8 +347,8 @@ class AiPlayer(TTTClient):
 
     def agent_pos(self):
         agent = []
-        agentsymbol = self.play_as()
-        for i in self.board:
+        agentsymbol = self.agent_role()
+        for i in self.board_content:
             if i == agentsymbol:
                 agent.append(i)
 
@@ -358,11 +363,17 @@ class AiPlayer(TTTClient):
     def is_won(self):
         return False
 
-    def play_as(self):
+    def agent_role(self):
         if self.role == 'X':
             return 'X'
         elif self.role == 'O':
             return 'O'
+
+    def opponent_role(self):
+        if self.role == 'X':
+            return 'O'
+        elif self.role == 'O':
+            return 'X'
 
     def opponent_last_move(self):
         return self.opp_last_move
