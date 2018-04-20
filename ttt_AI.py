@@ -125,6 +125,10 @@ class AiPlayer(TTTClient):
     board_content = []
     play_as = ''
     command = ""
+    agent_move = -1
+    agent_last_move = -1
+    opp_move = -1
+    opp_last_move = -1
 
     def __init__(self):
         """Initializes the client game object."""
@@ -240,6 +244,12 @@ class AiPlayer(TTTClient):
         """(Private) Shows the user the move that the other player has taken.
         This function might be overridden by the GUI program."""
         print("Your opponent took up number " + str(move));
+        
+        # Saves the oppenent's last move before overwriting
+        opp_last_move = move
+        
+        # Updates to the current move
+        opp_move = move - 1
 
     def __draw_winning_path__(self, winning_path):
         """(Private) Shows to the user the path that has caused the game to
@@ -299,6 +309,12 @@ class AiPlayer(TTTClient):
                     print("That position has already been taken." +
                           "Please choose another one.");
                 else:
+                    # Save the previous move
+                    self.agent_last_move = move
+                    
+                    # Update the current move
+                    agent_move = position - 1
+                    
                     # If the user input is valid, break the loop
                     break;
             else:
@@ -328,10 +344,10 @@ class AiPlayer(TTTClient):
         return 'X'
 
     def opponent_last_move(self):
-        return False
+        return self.opp_last_move
 
     def agent_last_move(self):
-        return False
+        return self.agent_last_move
 
     def all_avaiable_pos(self):
         return False
