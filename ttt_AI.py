@@ -4,7 +4,7 @@
 import socket
 # Import command line arguments
 from sys import argv
-
+from database.memory import Memory
 
 class TTTClient:
     """TTTClient deals with networking and communication with the TTTServer."""
@@ -130,6 +130,7 @@ class AiPlayer(TTTClient):
     def __init__(self):
         """Initializes the client game object."""
         TTTClient.__init__(self);
+        self.memory = Memory
 
     def start_game(self):
         """Starts the game and gets basic game information from the server."""
@@ -286,9 +287,9 @@ class AiPlayer(TTTClient):
         while True:
             # Prompt the user to enter a position
             try:
-                position = int(input('Please enter the position (1~9):'));
+                position = int(input('Please enter the position (1~9):'))
             except:
-                print("Invalid input.");
+                print("Invalid input.")
                 continue;
 
             # Ensure user-input data is valid
@@ -301,14 +302,15 @@ class AiPlayer(TTTClient):
                           "Please choose another one.");
                 else:
                     # If the user input is valid, break the loop
-                    break;
+                    self.memory.save(board_before=self.board_content, move=position, role=self.role, is_new=True )
+                    break
             else:
                 print("Please enter a value between 1 and 9 that" +
-                      "corresponds to the position on the grid board.");
+                      "corresponds to the position on the grid board.")
         # Loop until the user enters a valid value
 
         # Send the position back to the server
-        self.s_send("i", str(position));
+        self.s_send("i", str(position))
 
     def opponent_pos(self):
         return []
