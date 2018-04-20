@@ -310,10 +310,24 @@ class AiPlayer(TTTClient):
         self.s_send("i", str(position));
 
     def opponent_pos(self):
-        return []
+		opponent[]
+		agentSymbol = self.play_as() 
+		if agentSymbol == 'X':
+			oppSymbol = 'O'
+		elif agentSymbol == 'O':
+			oppSymbol = 'X'
+		for i in self.board:
+			if i == oppSymbol:
+				opponent.append(i)
+        return opponent
 
     def agent_pos(self):
-        return []
+		agent[]
+		agentSymbol = self.play_as() 
+		for i in self.board:
+			if i == agentSymbol:
+				agent.append(i)
+        return agent
 
     def is_game_over(self):
         return False
@@ -325,7 +339,10 @@ class AiPlayer(TTTClient):
         return False
 
     def play_as(self):
-        return 'X'
+		if self.role == 'X':
+			return 'X'
+		elif self.role == 'O':
+			return 'O'
 
     def opponent_last_move(self):
         return False
