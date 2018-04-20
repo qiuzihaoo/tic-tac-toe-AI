@@ -535,7 +535,7 @@ class MainGameScene(BaseScene):
         self.client.canvas = self;
         try:
             # Get the host IP address
-            host = socket.gethostbyname('s.CharmySoft.com');
+            host = '127.0.0.1';
         except:
             # If can't get the host IP from the domain
             tkinter.messagebox.showerror("Error", "Failed to get the game " +
@@ -546,7 +546,7 @@ class MainGameScene(BaseScene):
         # Set the notif text
         self.set_notif_text("Connecting to the game server " + host + "...");
         # Connect to the server
-        if (self.client.connect(host, "8080")):
+        if (self.client.connect(host, "3413")):
             # If connected to the server
             # Start the game
             self.client.start_game();
