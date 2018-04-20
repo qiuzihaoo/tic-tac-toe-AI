@@ -32,10 +32,10 @@ class ShortMemory:
             self.conn.commit()
             return True
         except self.conn.Error as e:
-            print("Error code:", e.errno)  # error number
-            print("SQLSTATE value:", e.sqlstate)  # SQLSTATE value
-            print("Error message:", e.msg)  # error message
-            print("Error:", e)
+            print("Error code:", e.args[0])  # error number
+            print("Error message:", e.args[1])  # error message
+            print("Please erase short memory after each game!")  # Guessing what might be wrong
+            return False
         except:
             print("Short memory Unknown Error!")
             return False
@@ -58,10 +58,9 @@ class ShortMemory:
                 })
             return result
         except self.conn.Error as e:
-            print("Error code:", e.errno)  # error number
-            print("SQLSTATE value:", e.sqlstate)  # SQLSTATE value
-            print("Error message:", e.msg)  # error message
-            print("Error:", e)
+            print("Error code:", e.args[0])  # error number
+            print("Error message:", e.args[1])  # error message
+            return False
         except:
             print("Short memory Unknown Error!")
             return False
@@ -91,10 +90,9 @@ class ShortMemory:
                 })
             return result
         except self.conn.Error as e:
-            print("Error code:", e.errno)  # error number
-            print("SQLSTATE value:", e.sqlstate)  # SQLSTATE value
-            print("Error message:", e.msg)  # error message
-            print("Error:", e)
+            print("Error code:", e.args[0])  # error number
+            print("Error message:", e.args[1])  # error message
+            return False
         except:
             print("Short memory Unknown Error!")
             return False
@@ -128,10 +126,11 @@ class LongMemory:
             self.conn.commit()
             return True
         except self.conn.Error as e:
-            print("Error code:", e.errno)  # error number
-            print("SQLSTATE value:", e.sqlstate)  # SQLSTATE value
-            print("Error message:", e.msg)  # error message
-            print("Error:", e)
+            print("Error code:", e.args[0])  # error number
+            print("Error message:", e.args[1])  # error message
+            print(
+                "Only new move are allowed You can update existing moves through update method!")  # Guessing what might be wrong
+            return False
         except:
             print("Long memory Unknown Error!")
             return False
@@ -154,10 +153,9 @@ class LongMemory:
                 })
             return result
         except self.conn.Error as e:
-            print("Error code:", e.errno)  # error number
-            print("SQLSTATE value:", e.sqlstate)  # SQLSTATE value
-            print("Error message:", e.msg)  # error message
-            print("Error:", e)
+            print("Error code:", e.args[0])  # error number
+            print("Error message:", e.args[1])  # error message
+            return False
         except:
             print("Long memory Unknown Error!")
             return False
@@ -188,10 +186,9 @@ class LongMemory:
                 })
             return result
         except self.conn.Error as e:
-            print("Error code:", e.errno)  # error number
-            print("SQLSTATE value:", e.sqlstate)  # SQLSTATE value
-            print("Error message:", e.msg)  # error message
-            print("Error:", e)
+            print("Error code:", e.args[0])  # error number
+            print("Error message:", e.args[1])  # error message
+            return False
         except:
             print("Long memory Unknown Error!")
             return False
@@ -223,10 +220,9 @@ class LongMemory:
             self.conn.commit()
             return True
         except self.conn.Error as e:
-            print("Error code:", e.errno)  # error number
-            print("SQLSTATE value:", e.sqlstate)  # SQLSTATE value
-            print("Error message:", e.msg)  # error message
-            print("Error:", e)
+            print("Error code:", e.args[0])  # error number
+            print("Error message:", e.args[1])  # error message
+            return False
         except:
             print("Long memory Unknown Error!")
             return False
