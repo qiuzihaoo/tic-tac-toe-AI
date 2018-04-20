@@ -4,7 +4,9 @@
 import socket
 # Import command line arguments
 from sys import argv
-from database.memory import Memory
+from database.memory import ShortMemory
+from database.memory import LongMemory
+
 
 class TTTClient:
     """TTTClient deals with networking and communication with the TTTServer."""
@@ -134,7 +136,8 @@ class AiPlayer(TTTClient):
     def __init__(self):
         """Initializes the client game object."""
         TTTClient.__init__(self)
-        self.memory = Memory()
+        self.shortMemory = ShortMemory()
+        self.longMemory = LongMemory()
 
     def start_game(self):
         """Starts the game and gets basic game information from the server."""
@@ -313,7 +316,8 @@ class AiPlayer(TTTClient):
                     self.agent_last_move = position - 1
 
                     # If the user input is valid, break the loop
-                    print(self.memory.save(board_before=self.board_content, move=position, role=self.role, is_new=True))
+                    if not self.shortMemory.save(board_before=self.board_content, move=position, role=self.role, is_new=True):
+                        print("Database Error")
                     break
             else:
                 print("Please enter a value between 1 and 9 that" +
@@ -324,23 +328,25 @@ class AiPlayer(TTTClient):
         self.s_send("i", str(position))
 
     def opponent_pos(self):
-		opponent[]
-		agentSymbol = self.play_as()
-		if agentSymbol == 'X':
-			oppSymbol = 'O'
-		elif agentSymbol == 'O':
-			oppSymbol = 'X'
-		for i in self.board:
-			if i == oppSymbol:
-				opponent.append(i)
+        opponent = []
+        agentSymbol = self.play_as()
+        if agentSymbol == 'X':
+            oppSymbol = 'O'
+        elif agentSymbol == 'O':
+            oppSymbol = 'X'
+        for i in self.board:
+            if i == oppSymbol:
+                opponent.append(i)
+
         return opponent
 
     def agent_pos(self):
-		agent[]
-		agentSymbol = self.play_as()
-		for i in self.board:
-			if i == agentSymbol:
-				agent.append(i)
+        agent = []
+        agentsymbol = self.play_as()
+        for i in self.board:
+            if i == agentsymbol:
+                agent.append(i)
+
         return agent
 
     def is_game_over(self):
@@ -353,10 +359,10 @@ class AiPlayer(TTTClient):
         return False
 
     def play_as(self):
-		if self.role == 'X':
-			return 'X'
-		elif self.role == 'O':
-			return 'O'
+        if self.role == 'X':
+            return 'X'
+        elif self.role == 'O':
+            return 'O'
 
     def opponent_last_move(self):
         return self.opp_last_move
@@ -369,6 +375,7 @@ class AiPlayer(TTTClient):
 
     def position_score(position):
         return 100
+
 
 # Define the main program
 def main():
