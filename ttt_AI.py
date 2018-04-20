@@ -126,6 +126,10 @@ class AiPlayer(TTTClient):
     command = ""
     ## play_as = 'X' or 'O'
     play_as = ''
+    command = ""
+    agent_last_move = -1
+    opp_move = -1
+    opp_last_move = -1
 
     def __init__(self):
         """Initializes the client game object."""
@@ -240,7 +244,13 @@ class AiPlayer(TTTClient):
     def __opponent_move_made__(self, move):
         """(Private) Shows the user the move that the other player has taken.
         This function might be overridden by the GUI program."""
-        print("Your opponent took up number " + str(move))
+        print("Your opponent took up number " + str(move));
+
+        # Saves the oppenent's last move before overwriting
+        opp_last_move = move
+
+        # Updates to the current move
+        opp_move = move - 1
 
     def __draw_winning_path__(self, winning_path):
         """(Private) Shows to the user the path that has caused the game to
@@ -299,6 +309,9 @@ class AiPlayer(TTTClient):
                     print("That position has already been taken." +
                           "Please choose another one.")
                 else:
+                    # Save the previous move
+                    self.agent_last_move = position - 1
+
                     # If the user input is valid, break the loop
                     print(self.memory.save(board_before=self.board_content, move=position, role=self.role, is_new=True))
                     break
@@ -311,10 +324,24 @@ class AiPlayer(TTTClient):
         self.s_send("i", str(position))
 
     def opponent_pos(self):
-        return []
+		opponent[]
+		agentSymbol = self.play_as()
+		if agentSymbol == 'X':
+			oppSymbol = 'O'
+		elif agentSymbol == 'O':
+			oppSymbol = 'X'
+		for i in self.board:
+			if i == oppSymbol:
+				opponent.append(i)
+        return opponent
 
     def agent_pos(self):
-        return []
+		agent[]
+		agentSymbol = self.play_as()
+		for i in self.board:
+			if i == agentSymbol:
+				agent.append(i)
+        return agent
 
     def is_game_over(self):
         return False
@@ -326,13 +353,16 @@ class AiPlayer(TTTClient):
         return False
 
     def play_as(self):
-        return 'X'
+		if self.role == 'X':
+			return 'X'
+		elif self.role == 'O':
+			return 'O'
 
     def opponent_last_move(self):
-        return False
+        return self.opp_last_move
 
     def agent_last_move(self):
-        return False
+        return self.agent_last_move
 
     def all_avaiable_pos(self):
         return False
