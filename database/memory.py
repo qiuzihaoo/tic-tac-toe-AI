@@ -97,6 +97,46 @@ class ShortMemory:
             print("Short memory Unknown Error!")
             return False
 
+    def new_moves(self):
+        query = self.conn.cursor()
+        statement = "select id, board_before, move, board_after, role, new from shortterm where  new = TRUE "
+        try:
+            query.execute(statement)
+            result = []
+            for (id, board_before, move, board_after, role, new) in query:
+                result.append({
+                    "id": id,
+                    "board_before": board_before.replace('-', ' '),
+                    "move": move,
+                    "board_after": board_after.replace('-', ' '),
+                    "role": role,
+                    "new": new
+                })
+            return result
+        except self.conn.Error as e:
+            print("Error code:", e.args[0])  # error number
+            print("Error message:", e.args[1])  # error message
+            return False
+        except:
+            print("Short memory Unknown Error!")
+            return False
+
+    # Erases shortterm table
+    def erase(self):
+        query = self.conn.cursor()
+        statement = "DELETE FROM `shortterm`"
+        try:
+            query.execute(statement)
+            self.conn.commit()
+            return True
+        except self.conn.Error as e:
+            print("Error code:", e.args[0])  # error number
+            print("Error message:", e.args[1])  # error message
+            return False
+        except:
+            print("Short memory Unknown Error!")
+            return False
+
 
 # The main difference between short and long term is that short term memory must be erased after each game.
 # Long term memory contain score of previous move but short term memory does not
