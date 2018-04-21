@@ -354,14 +354,38 @@ class AiPlayer(TTTClient):
 
         return agent
 
-    def is_game_over(self):
-        return False
+    def is_game_over():
+        if self.is_won() or self.is_draw()
+            self.shortMemory.save(board_before=self.board_content, move=position, role=self.role, is_new=True)
+            return True
+        else
+            return False
 
     def is_draw(self):
-        return False
+        Full = True
+        for i in range(0,8):
+            if board[i] == " ":
+               Full = False
 
-    def is_won(self):
-        return False
+        if Full == True:
+            print "It is draw."
+            return True
+        else
+            return False
+
+    def is_won(board_content,position):
+        if  (board_content[0] == agent_move and board_content[1] == agent_move and board_content[2 ] == agent_move) or
+            (board_content[3] == agent_move and board_content[4] == agent_move and board_content[5] == agent_move) or
+            (board_content[6] == agent_move and board_content[7] == agent_move and board_content[8] == agent_move) or
+            (board_content[0] == agent_move and board_content[3] == agent_move and board_content[6] == agent_move) or
+            (board_content[1] == agent_move and board_content[4] == agent_move and board_content[7] == agent_move) or
+            (board_content[2] == agent_move and board_content[5] == agent_move and board_content[8] == agent_move) or
+            (board_content[0] == agent_move and board_content[4] == agent_move and board_content[8] == agent_move) or
+            (board_content[2] == agent_move and board_content[4] == agent_move and board_content[6] == agent_move):
+            print ("you have won!")
+            return True
+        else
+            return False
 
     def agent_role(self):
         if self.role == 'X':
