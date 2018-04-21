@@ -354,9 +354,9 @@ class AiPlayer(TTTClient):
 
         return agent
 
-    def is_game_over():
+    def is_game_over(self):
         if self.is_won() or self.is_draw()
-            self.shortMemory.save(board_before=self.board_content, move=position, role=self.role, is_new=True)
+            self.longMemory.save(board_after=self.board_content, move=position, role=self.role, is_new=True)
             return True
         else
             return False
